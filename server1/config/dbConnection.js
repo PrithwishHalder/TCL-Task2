@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const URL = process.env.MONGO_URI;
 
-const connect = async () => {
+// MongoDB Connection with Database
+const connectDB = async () => {
   try {
     const conn = await mongoose.connect(URL);
     console.log(`MongoDB running at ${conn.connection.host}:${conn.connection.port}`);
@@ -11,4 +12,4 @@ const connect = async () => {
   }
 };
 
-module.exports = connect;
+module.exports = connectDB;
