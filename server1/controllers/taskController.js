@@ -28,7 +28,7 @@ const createTask = async (req, res) => {
 // Controller to get records from DB
 const getTask = async (req, res) => {
   try {
-    const tasks = await (req.params.id ? Task.findById(req.params.id) : Task.find());
+    const tasks = await (req.query.id ? Task.findById(req.query.id) : Task.find());
     if (tasks === null || tasks.length === 0) {
       return res.status(404).json({
         message: "No Records found!",
@@ -43,7 +43,7 @@ const getTask = async (req, res) => {
 // Controller to update record available in DB
 const updateTask = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.query.id;
     const { status } = req.body;
     console.log(id);
     if (!id) {
@@ -75,21 +75,22 @@ const updateTask = async (req, res) => {
 // Controller to delete records from DB
 const deleteTask = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.query.id;
+    console.log(id);
     if (!id) {
       return res.status(404).json({
         message: `Please enter valid${!id && " id"} parameter!`,
       });
     }
     // FIND IF THE RECORDS EXISTS
-    const task = await Task.findById({ _id: req.params.id });
+    const task = await Task.findById({ _id: req.query.id });
     if (!task) {
       return res.status(404).json({
         message: "No such Task found!",
       });
     }
     // DELETE THE CONTACT BASED IN 'id'
-    const deletedtask = await Task.findByIdAndRemove(req.params.id);
+    const deletedtask = await Task.findByIdAndRemove(req.query.id);
     return res.json({ message: "Task Deleted!" });
   } catch (error) {
     return res.status(404).json({ message: error.message });

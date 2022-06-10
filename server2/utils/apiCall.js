@@ -2,12 +2,12 @@ const axios = require("axios").default;
 
 const apicall = async (req) => {
   try {
-    console.log(req);
-    const { path, method } = req;
-    let data = await axios({ method, url: `http://127.0.0.1:5000/api${path}`, data: req.body });
+    const { url, method } = req;
+    const URL = process.env.SERVER1_URL;
+    let data = await axios({ method, url: `${URL}${url}`, data: req.body });
     return data;
   } catch (error) {
-    return { message: error.message };
+    return { message: error.response.data.message };
   }
 };
 

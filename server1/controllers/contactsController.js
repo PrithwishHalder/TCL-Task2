@@ -29,7 +29,7 @@ const createContacts = async (req, res) => {
 const getContacts = async (req, res) => {
   try {
     // GET ONE RECORD IF 'id' PASSED, ELSE GET ALL RECORDS
-    const contact = await (req.params.id ? Contacts.findById(req.params.id) : Contacts.find());
+    const contact = await (req.query.id ? Contacts.findById(req.query.id) : Contacts.find());
     if (contact === null || contact.length === 0) {
       return res.status(404).json({
         message: "No Records found!",
@@ -44,7 +44,7 @@ const getContacts = async (req, res) => {
 // Controller to update already available records
 const updateContacts = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.query.id;
     const { name, phone } = req.body;
     if (!id) {
       return res.status(404).json({
@@ -76,7 +76,7 @@ const updateContacts = async (req, res) => {
 // Controller to delete records from DB
 const deleteContact = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.query.id;
     if (!id) {
       return res.status(404).json({
         message: `Please enter valid${!id && " id"} parameter!`,
